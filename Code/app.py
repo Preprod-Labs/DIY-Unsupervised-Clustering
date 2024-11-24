@@ -10,7 +10,7 @@
             # Unit test: Pass
             # Integration test: Pass
      
-    # Description: This Streamlit app allows users to input features and make predictions using Unsupervised Learning.
+    # Description: This is the main Streamlit application script that provides a web interface for customer segmentation. It integrates all clustering algorithms and allows users to train models, evaluate performance, and classify new customers through an interactive interface.
         # SQLite: Yes
         # MQs: No
 
@@ -19,9 +19,11 @@
 # Dependency: 
     # Environment:     
         # Python 3.10.11
-        # Streamlit 1.40.0
         # numpy 1.24.3
         # pandas 1.5.3
+        # streamlit 1.40.0
+        # joblib 1.3.1
+        # scikit-learn 1.2.2
 
 # importing all dependencies
 import numpy as np
@@ -181,10 +183,10 @@ with tab2:
     st.markdown(f"<h3 style='text-align: center; color: white;'>{model_name}</h3>", unsafe_allow_html=True)
 
     # Slider to select the EPS value, which is the distance threshold for clustering in DBSCAN.
-    eps = st.slider('EPS (distance threshold):', min_value=0.1, max_value=2.0, value=0.5, step=0.1)
+    eps = st.slider('EPS (distance threshold):', min_value=0.1, max_value=2.0, value=0.3, step=0.1)
 
     # Slider to select the minimum samples required to form a cluster.
-    min_sm = st.slider('Min Samples', min_value=0, max_value=50, step=2)
+    min_sm = st.slider('Min Samples', min_value=0, max_value=50, step=1)
 
     # Button to trigger training of the DBSCAN model.
     if st.button(f"Train {model_name} Model", use_container_width=True):
