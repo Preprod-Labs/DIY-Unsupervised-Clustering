@@ -43,3 +43,11 @@ The dataset used for clustering tasks is designed to facilitate clustering analy
     
 
 3. *View Evaluation Results*: Check the saved images/ directory for saved plots and evaluation results.
+
+## Contact
+
+- *Developers*:
+  - Akshat Rastogi
+  - Shubh Gupta
+  - Rupal Mishra
+- *Code Ownership Rights*: PreProd Corp
