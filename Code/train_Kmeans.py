@@ -35,37 +35,33 @@ from ingest_transform import preprocess_data, scale_data  # Custom functions for
 # from load import load_train  # (Commented out as it is not used in this snippet)
 from evaluate import evaluate_model  # Function to evaluate the clustering model's performance
 
-def train_model(df, n):
-    """
-    Train the K-Means clustering algorithm using the provided DataFrame.
+def train_model(df, n, save_path):
+    """Train KMeans model using DataFrame directly and save to user-specified path"""
+    try:
+        # Append the file name to the provided save path
+        save_path = save_path + r'\kmeans.pkl'
 
-    Args:
-        df (pd.DataFrame): The input DataFrame containing data for clustering.
-        n (int): The number of clusters for the K-Means algorithm.
+        # Get numpy array from DataFrame
+        X = df.values
 
-    Returns:
-        evals: Evaluation results from the evaluate_model function.
-    """
-    # Preprocess the input DataFrame to prepare it for clustering
-    X = preprocess_data(df)
-    
-    # Scale the data and apply PCA transformation for dimensionality reduction
-    X_pca = scale_data(X)
-    
-    # Initialize the K-Means model with the specified number of clusters and a fixed random state
-    kmeans = KMeans(n_clusters=n, random_state=42).fit(X_pca)
-    
-    # Retrieve the coordinates of the cluster centroids
-    centroids = kmeans.cluster_centers_
-    
-    # Get the predicted labels for each sample in the dataset
-    labels = kmeans.labels_
-    
-    # Evaluate the model's performance using the custom evaluation function
-    evals = evaluate_model(X_pca, labels, "K-Means", centroids)
-    
-    # Save the trained K-Means model to a file for future use
-    joblib.dump(kmeans, 'Code\\saved model\\kmeans.pkl')
+        # Scale the data
+        X_pca = scale_data(X)
 
-    # Return the evaluation results for further analysis
-    return evals
+        # Train the KMeans model
+        kmeans = KMeans(n_clusters=n, random_state=42).fit(X_pca)
+        centroids = kmeans.cluster_centers_
+        labels = kmeans.labels_
+
+        # Evaluate the model
+        evals = evaluate_model(X_pca, labels, "K-Means", centroids)
+
+        # Save the model to the specified path
+        joblib.dump(kmeans, save_path)
+        print(f"Model successfully saved to: {save_path}")
+
+        return evals
+
+    except Exception as e:
+        print(f"Error in KMeans training: {e}")
+        return None
+

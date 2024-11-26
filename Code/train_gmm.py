@@ -1,4 +1,4 @@
-# META DATA - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# META DATA - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
     # Developer details: 
         # Name: Akshat Rastogi, Shubh Gupta and Rupal Mishra
@@ -33,34 +33,32 @@ from ingest_transform import preprocess_data, scale_data  # Custom functions for
 # from load import load_train  # (Commented out as it is not used in this snippet)
 from evaluate import evaluate_model  # Function to evaluate the clustering model's performance
 
-def train_model(df, n):
-    """
-    Train the Gaussian Mixture Model (GMM) clustering algorithm using the provided DataFrame.
+def train_model(df, n, save_path):
+    """Train GMM model using DataFrame directly and save to user-specified path"""
+    try:
+        # Append the file name to the provided save path
+        save_path = save_path + r'\gmm.pkl'
 
-    Args:
-        df (pd.DataFrame): The input DataFrame containing data for clustering.
-        n (int): The number of mixture components (clusters) for the GMM.
+        # Convert DataFrame to numpy array
+        X = df.values
 
-    Returns:
-        evals: Evaluation results from the evaluate_model function.
-    """
-    # Preprocess the input DataFrame to prepare it for clustering
-    X = preprocess_data(df)
-    
-    # Scale the data and apply PCA transformation for dimensionality reduction
-    X_pca = scale_data(X)
-    
-    # Initialize the Gaussian Mixture Model with the specified number of components and random state
-    gmm = GaussianMixture(n_components=n, random_state=42)
-    
-    # Fit the GMM to the PCA-transformed data and retrieve the predicted labels for each sample
-    labels = gmm.fit_predict(X_pca)
-    
-    # Evaluate the model using the custom evaluation function
-    evals = evaluate_model(X_pca, labels, 'Gaussian Mixture Model')
-    
-    # Save the trained Gaussian Mixture Model to a file for future use
-    joblib.dump(gmm, 'Code\\saved model\\gmm.pkl')
+        # Scale the data
+        X_pca = scale_data(X)
 
-    # Return the evaluation results for further analysis
-    return evals
+        # Train the Gaussian Mixture Model
+        gmm = GaussianMixture(n_components=n, random_state=42)
+        labels = gmm.fit_predict(X_pca)
+
+        # Evaluate the model
+        evals = evaluate_model(X_pca, labels, 'Gaussian Mixture Model')
+
+        # Save the model to the specified path
+        joblib.dump(gmm, save_path)
+        print(f"Model successfully saved to: {save_path}")
+
+        return evals
+
+    except Exception as e:
+        print(f"Error in GMM training: {e}")
+        return None
+

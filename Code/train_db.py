@@ -34,36 +34,32 @@ from ingest_transform import preprocess_data, scale_data  # Custom functions for
 # from load import load_train  # (Commented out as it is not used in this snippet)
 from evaluate import evaluate_model  # Function to evaluate the clustering model's performance
 
-def train_model(df, eps, minsm, minmax):
-    """
-    Train the DBSCAN clustering model using the provided DataFrame.
+def train_model(df, eps, minsm, save_path, minmax):
+    """Train DBSCAN model using DataFrame directly and save to user-specified path"""
+    try:
+        # Append the file name to the provided save path
+        save_path = save_path + r'\dbscan.pkl'
 
-    Args:
-        df (pd.DataFrame): The input DataFrame containing data for clustering.
-        eps (float): The maximum distance between two samples for them to be considered as neighbors.
-        minsm (int): The minimum number of samples in a neighborhood for a point to be considered as a core point.
-        minmax (bool): Indicates whether to use MinMaxScaler for scaling (True) or StandardScaler (False).
+        # Convert DataFrame to numpy array
+        X = df.values
 
-    Returns:
-        evals: Evaluation results from the evaluate_model function.
-    """
-    # Preprocess the input DataFrame to prepare it for clustering
-    X = preprocess_data(df)
-    
-    # Scale the data and apply PCA transformation for dimensionality reduction
-    X_pca = scale_data(X, minmax)
-    
-    # Initialize the DBSCAN model with specified parameters and fit it to the PCA-transformed data
-    dbscan = DBSCAN(eps=eps, min_samples=minsm).fit(X_pca)
-    
-    # Retrieve the cluster labels assigned by the DBSCAN algorithm
-    labels = dbscan.labels_
-    
-    # Evaluate the model using the custom evaluation function
-    evals = evaluate_model(X_pca, labels, 'DBSCAN')
-    
-    # Save the trained DBSCAN model to a file for future use
-    joblib.dump(dbscan, 'Code\\saved model\\dbscan.pkl')
+        # Scale the data
+        X_pca = scale_data(X, minmax)
 
-    # Return the evaluation results for further analysis
-    return evals
+        # Train the DBSCAN model
+        dbscan = DBSCAN(eps=eps, min_samples=minsm).fit(X_pca)
+        labels = dbscan.labels_
+
+        # Evaluate the model
+        evals = evaluate_model(X_pca, labels, 'DBSCAN')
+
+        # Save the model to the specified path
+        joblib.dump(dbscan, save_path)
+        print(f"Model successfully saved to: {save_path}")
+
+        return evals
+
+    except Exception as e:
+        print(f"Error in DBSCAN training: {e}")
+        return None
+
