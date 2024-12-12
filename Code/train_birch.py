@@ -1,14 +1,8 @@
 # META DATA - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-    # Developer details: 
-        # Name: Shubh Gupta
-        # Role: Developers
-        # Code ownership rights: PreProd Corp
-    # Version:
-        # Version: V 1.1 (21 September 2024)
-            # Developers: Shubh Gupta
-            # Unit test: Pass
-            # Integration test: Pass
+    # Version: V 1.1 (21 September 2024)
+        # Unit test: Pass
+        # Integration test: Pass
      
     # Description: This script implements BIRCH (Balanced Iterative Reducing and Clustering using Hierarchies) algorithm for customer segmentation. It provides functionality to train and evaluate BIRCH clustering models.
         # SQLite: Yes
@@ -43,7 +37,7 @@ def train_model(df, n_cluster, threas, save_path, minmax):
     try:
         # User input for the model save path
         # save_path = st.text_input("Enter the path to save the trained BIRCH model:", "Code/saved_model")
-        save_path = save_path + r'\birch.pkl'
+        save_path = save_path + r'birch.pkl'
 
         # Convert DataFrame to numpy array
         X = df.values

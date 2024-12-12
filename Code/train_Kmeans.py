@@ -1,14 +1,8 @@
 # META DATA - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-    # Developer details: 
-        # Name: Akshat Rastogi and Rupal Mishra
-        # Role: Developers
-        # Code ownership rights: PreProd Corp
-    # Version:
-        # Version: V 1.1 (21 September 2024)
-            # Developers: Akshat Rastogi and Rupal Mishra
-            # Unit test: Pass
-            # Integration test: Pass
+    # Version: V 1.1 (21 September 2024)
+        # Unit test: Pass
+        # Integration test: Pass
      
     # Description: This script implements K-Means clustering algorithm for customer segmentation. It provides functionality to train and evaluate K-Means clustering models.
         # SQLite: Yes
@@ -39,7 +33,7 @@ def train_model(df, n, save_path):
     """Train KMeans model using DataFrame directly and save to user-specified path"""
     try:
         # Append the file name to the provided save path
-        save_path = save_path + r'\kmeans.pkl'
+        save_path = save_path + r'kmeans.pkl'
 
         # Get numpy array from DataFrame
         X = df.values

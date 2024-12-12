@@ -1,6 +1,6 @@
 # DIY-UnsupervisedClustering
 
-This repository provides a comprehensive solution for unsupervised clustering using several algorithms. The project includes data preprocessing, model training, evaluation, and visualization for clustering tasks with a focus on BIRCH, DBSCAN, GMM, KMeans, and OPTICS algorithms.
+This repository provides a comprehensive solution for unsupervised clustering using several algorithms. The project includes data preprocessing, model training, evaluation, and clustering tasks with a focus on BIRCH, DBSCAN, GMM, KMeans, and OPTICS algorithms.
 
 ## Unsupervised Clustering Algorithms
 
@@ -98,13 +98,8 @@ DIY-Unsupervised-clustering/
    - The predicted cluster label and the corresponding cluster graph image will be displayed.
 
 6. **View Evaluation Results**:
-   - Check the `saved images/` directory for saved plots and evaluation results.
+   - Check the `saved_images/` directory for saved plots and evaluation results.
    - The cluster graph images for each trained model will be saved in this directory.
 
-## Contact
-
-- _Developers_:
-  - Akshat Rastogi
-  - Shubh Gupta
-  - Rupal Mishra
+## License
 - _Code Ownership Rights_: PreProd Corp

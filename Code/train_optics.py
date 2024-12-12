@@ -1,14 +1,9 @@
 # META DATA - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-    # Developer details: 
-        # Name: Shubh Gupta and Rupal Mishra
-        # Role: Developers
-        # Code ownership rights: PreProd Corp
-    # Version:
-        # Version: V 1.1 (21 September 2024)
-            # Developers: Shubh Gupta and Rupal Mishra
-            # Unit test: Pass
-            # Integration test: Pass
+# Version:
+    # Version: V 1.1 (21 September 2024)
+        # Unit test: Pass
+        # Integration test: Pass
      
     # Description: This script implements OPTICS (Ordering Points To Identify Clustering Structure) algorithm for customer segmentation. It provides functionality to train and evaluate OPTICS clustering models.
         # SQLite: Yes
@@ -37,7 +32,7 @@ def train_model(df, min_sample, xi, cluster, save_path, minmax):
     """Train OPTICS model using DataFrame directly and save to user-specified path"""
     try:
         # Append the file name to the provided save path
-        save_path = save_path + r'\optics.pkl'
+        save_path = save_path + r'optics.pkl'
 
         # Convert DataFrame to numpy array
         X = df.values

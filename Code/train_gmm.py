@@ -1,14 +1,8 @@
 # META DATA - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-    # Developer details: 
-        # Name: Akshat Rastogi, Shubh Gupta and Rupal Mishra
-        # Role: Developers
-        # Code ownership rights: PreProd Corp
-    # Version:
-        # Version: V 1.1 (21 September 2024)
-            # Developers: Akshat Rastogi, Shubh Gupta and Rupal Mishra
-            # Unit test: Pass
-            # Integration test: Pass
+    # Version: V 1.1 (21 September 2024)
+        # Unit test: Pass
+        # Integration test: Pass
      
     # Description: This script implements Gaussian Mixture Model (GMM) clustering algorithm for customer segmentation. It provides functionality to train and evaluate GMM clustering models.
         # SQLite: Yes
@@ -37,7 +31,7 @@ def train_model(df, n, save_path):
     """Train GMM model using DataFrame directly and save to user-specified path"""
     try:
         # Append the file name to the provided save path
-        save_path = save_path + r'\gmm.pkl'
+        save_path = save_path + r'gmm.pkl'
 
         # Convert DataFrame to numpy array
         X = df.values

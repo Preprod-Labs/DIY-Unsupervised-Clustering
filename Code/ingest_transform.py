@@ -1,14 +1,8 @@
 # META DATA - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-    # Developer details: 
-        # Name: Akshat Rastogi, Shubh Gupta
-        # Role: Developers
-        # Code ownership rights: PreProd Corp
-    # Version:
-        # Version: V 1.1 (21 September 2024)
-            # Developers: Akshat Rastogi, Shubh Gupta and Rupal Mishra
-            # Unit test: Pass
-            # Integration test: Pass
+    # Version: V 1.1 (21 September 2024)
+        # Unit test: Pass
+        # Integration test: Pass
      
     # Description: This script handles data ingestion, preprocessing, and transformation operations. It includes functions for data scaling, PCA transformation, and SQLite database operations for storing and retrieving data paths.
         # SQLite: Yes
@@ -40,7 +34,7 @@ customer_type_mapping = {'budget': 0, 'regular': 1, 'premium': 2}  # Corrected m
 # Initialize scalers and PCA
 standard = StandardScaler()  # Standard scaler for standardizing features
 minmax = MinMaxScaler()  # MinMax scaler for scaling features to a range
-pca = PCA(n_components=2)  # PCA to reduce data to 2 dimensions
+pca = PCA()  
 
 # Preprocessing function for the data
 def preprocess_data(df):
@@ -132,8 +126,8 @@ def scale_back(items, minm=False):
     """
     global standard, minmax, pca
     scaler = minmax if minm else standard
-    X_scaled = scaler.transform(items)  # Scale the data using the selected scaler
-    scaled_pca = pca.transform(X_scaled)  # Apply PCA transformation
+    X_scaled = scaler.fit_transform(items)  # Scale the data using the selected scaler
+    scaled_pca = pca.fit_transform(X_scaled)  # Apply PCA transformation
 
     return scaled_pca
 

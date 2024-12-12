@@ -1,14 +1,8 @@
 # META DATA - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-    # Developer details: 
-        # Name: Akshat Rastogi
-        # Role: Developers
-        # Code ownership rights: PreProd Corp
-    # Version:
-        # Version: V 1.1 (21 September 2024)
-            # Developers: Akshat Rastogi, Shubh Gupta and Rupal Mishra
-            # Unit test: Pass
-            # Integration test: Pass
+    # Version: V 1.1 (21 September 2024)
+        # Unit test: Pass
+        # Integration test: Pass
      
     # Description: This script provides evaluation metrics and visualization capabilities for clustering models. It calculates silhouette scores and generates cluster visualization plots for model performance analysis.
         # SQLite: Yes
@@ -27,6 +21,7 @@
 import numpy as np  # For numerical operations, especially working with arrays
 from sklearn.metrics import silhouette_score  # To evaluate the quality of clustering
 import matplotlib.pyplot as plt  # For plotting graphs
+import os
 
 def evaluate_model(X_pca, labels, algorithm_name, centroids=None):
     """
@@ -84,7 +79,7 @@ def evaluate_model(X_pca, labels, algorithm_name, centroids=None):
     plt.colorbar(label='Cluster Label')
     
     # Save the plot as an image in the specified directory
-    plt.savefig(f'Code/saved images/{algorithm_name}.jpg', format="jpg", dpi=300)
+    plt.savefig(os.path.join('Code','saved_images',f'{algorithm_name}.jpg'), format="jpg", dpi=300)
     
     # Display the plot
     plt.show()

@@ -1,14 +1,8 @@
 # META DATA - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-    # Developer details: 
-        # Name: Akshat Rastogi, Shubh Gupta and Rupal Mishra
-        # Role: Developers
-        # Code ownership rights: PreProd Corp
-    # Version:
-        # Version: V 1.1 (21 September 2024)
-            # Developers: Akshat Rastogi, Shubh Gupta and Rupal Mishra
-            # Unit test: Pass
-            # Integration test: Pass
+    # Version: V 1.1 (21 September 2024)
+        # Unit test: Pass
+        # Integration test: Pass
      
     # Description: This is the main Streamlit application script that provides a web interface for customer segmentation. It integrates all clustering algorithms and allows users to train models, evaluate performance, and classify new customers through an interactive interface.
         # SQLite: Yes
@@ -36,6 +30,7 @@ from train_optics import train_model as train_optics
 from train_birch import train_model as train_birch
 from classification import classify
 from ingest_transform import preprocess_test, store_path_to_sqlite, retrieve_data_from_sqlite
+import os
 
 
 
@@ -46,10 +41,10 @@ st.divider()
 
 # Initialize session state variables if not already set
 if "sqlite_db_path" not in st.session_state:
-    st.session_state.sqlite_db_path = "Data/Processed/sqlite.db"
+    st.session_state.sqlite_db_path = os.path.join('Data','Processed','sqlite.db')
 
 if "master_data_path" not in st.session_state:
-    st.session_state.master_data_path = r"Data\Master\MOCK_DATA.csv"
+    st.session_state.master_data_path = os.path.join('Data', 'Master', 'MOCK_DATA.csv')
 
 tab1, tab2, tab3 = st.tabs(["Model Config", "Model Training & Evaluation", "Classification"])
 
@@ -101,7 +96,7 @@ with tab2:
     num_clusters = st.number_input('Number of clusters:', min_value=2, max_value=10, value=3, step=1)
 
     # Button to trigger the training of the K-Means model.
-    save_path = st.text_input("Enter the path to save the trained K-Means model:", "Code/saved_model")
+    save_path = st.text_input("Enter the path to save the trained K means Model model:")
     if st.button(f"Train {model_name} Model", use_container_width=True):
         # Display a status message indicating that training is in progress.
         with st.status("Training K-Means Model..."):
@@ -122,7 +117,8 @@ with tab2:
         st.write(f"Silhouette: {score}")
 
         # Show an image of the cluster graph saved under the specified path.
-        st.image(f"Code/saved images/{model_name}.jpg", caption=f"Cluster graph of {model_name}", width=600)
+        image_path = os.path.join('Code', 'saved_images', f'{model_name}.jpg')
+        st.image(image_path, caption=f"Cluster graph of {model_name}", width=600)
 
     # Add a divider to separate this section from others.
     st.divider()
@@ -132,7 +128,7 @@ with tab2:
     model_name = 'Gaussian Mixture Model'
     
     # Display the model name header with styling.
-    save_path = st.text_input("Enter the path to save the trained Gaussian Mixture Model model:", "Code/saved_model")
+    save_path = st.text_input("Enter the path to save the trained Gaussian Mixture Model model:")
     st.markdown(f"<h3 style='text-align: center; color: white;'>{model_name}</h3>", unsafe_allow_html=True)
 
     # Slider to select the number of components for the Gaussian Mixture Model.
@@ -155,7 +151,8 @@ with tab2:
         st.write(f"Silhouette: {score}")
 
         # Display the cluster graph image for the trained model.
-        st.image(f"Code/saved images/{model_name}.jpg", caption=f"Cluster graph of {model_name}", width=600)
+        image_path = os.path.join('Code', 'saved_images', f'{model_name}.jpg')
+        st.image(image_path, caption=f"Cluster graph of {model_name}", width=600)
 
     # Add a divider to separate the sections.
     st.divider()
@@ -174,7 +171,7 @@ with tab2:
     min_sm = st.slider('Min Samples', min_value=20, max_value=50, step=2)
 
     # Button to trigger training of the DBSCAN model.
-    save_path = st.text_input("Enter the path to save the trained DBSCAN model:", "Code/saved_model")
+    save_path = st.text_input("Enter the path to save the trained DBSCAN model:")
     if st.button(f"Train {model_name} Model", use_container_width=True):
         # Display status message while the model is training.
         with st.status(f"Training {model_name}..."):
@@ -191,7 +188,8 @@ with tab2:
         st.write(f"Silhouette: {score}")
 
         # Display the cluster graph image for the trained model.
-        st.image(f"Code/saved images/{model_name}.jpg", caption=f"Cluster graph of {model_name}", width=600)
+        image_path = os.path.join('Code', 'saved_images', f'{model_name}.jpg')
+        st.image(image_path, caption=f"Cluster graph of {model_name}", width=600)
 
     # Add a divider to separate the sections.
     st.divider()
@@ -213,7 +211,7 @@ with tab2:
     cluster = st.slider('min_cluster_size:', min_value=0.1, max_value=0.25, step=0.05)
 
     # Button to trigger training of the OPTICS model.
-    save_path = st.text_input("Enter the path to save the trained OPTICS model:", "Code/saved_model")
+    save_path = st.text_input("Enter the path to save the trained OPTICS model:")
     if st.button(f"Train {model_name} Model", use_container_width=True):
         # Display status message while the model is training.
         with st.status(f"Training {model_name}..."):
@@ -230,7 +228,8 @@ with tab2:
         st.write(f"Silhouette: {score}")
 
         # Display the cluster graph image for the trained model.
-        st.image(f"Code/saved images/{model_name}.jpg", caption=f"Cluster graph of {model_name}", width=600)
+        image_path = os.path.join('Code', 'saved_images', f'{model_name}.jpg')
+        st.image(image_path, caption=f"Cluster graph of {model_name}", width=600)
 
     # Add a divider to separate the sections.
     st.divider()
@@ -249,7 +248,7 @@ with tab2:
     threas = st.slider('min_cluster_size:', min_value=0.1, max_value=0.55, step=0.05, key='thres_option_2')
 
     # Button to trigger training of the BIRCH model.
-    save_path = st.text_input("Enter the path to save the trained BIRCH model:", "Code/saved_model")
+    save_path = st.text_input("Enter the path to save the trained BIRCH model:")
     if st.button(f"Train {model_name} Model", use_container_width=True):
         # Display status message while the model is training.
         with st.status(f"Training {model_name}..."):
@@ -266,7 +265,8 @@ with tab2:
         st.write(f"Silhouette: {score}")
 
         # Display the cluster graph image for the trained model.
-        st.image(f"Code/saved images/{model_name}.jpg", caption=f"Cluster graph of {model_name}", width=600)
+        image_path = os.path.join('Code', 'saved_images', f'{model_name}.jpg')
+        st.image(image_path, caption=f"Cluster graph of {model_name}", width=600)
 
     # Add a divider to mark the end of the training section.
     st.divider()
@@ -328,7 +328,6 @@ with tab3:
             new_cluster = classify(algorithm, items)
             
             # Display the cluster result
-            st.write(f"The Data belong to {new_cluster}")
+            st.write(f"The Data belong to cluster number: {new_cluster} ")
             
-            # Display the corresponding cluster graph image for the selected algorithm
-            st.image(f"Code/saved images/{algorithm}.jpg", caption=f"Cluster graph of {algorithm}", width=600)
+
